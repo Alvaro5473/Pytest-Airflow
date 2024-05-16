@@ -1,0 +1,21 @@
+version: '3'
+services:
+  airflow:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      AIRFLOW__CORE__LOAD_EXAMPLES: "true"
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - ./plugins:/opt/airflow/plugins
+    command: webserver
+
+  pytest:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: pytest
